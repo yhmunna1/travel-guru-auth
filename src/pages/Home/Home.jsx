@@ -8,6 +8,9 @@ import { FaArrowRight } from "react-icons/fa6";
 import NavbarWhite from "../Shared/Navbar/NavbarWhite";
 
 const Home = () => {
+  const handleBooking = () => {
+    console.log("Booking");
+  };
   return (
     <div className="relative h-screen w-full">
       <div
@@ -19,7 +22,7 @@ const Home = () => {
       ></div>
       <div className="relative z-10 h-full max-w-6xl mx-auto">
         <NavbarWhite></NavbarWhite>
-        <div className="h-full flex items-center gap-6">
+        <div className="flex items-center mt-52 gap-6">
           {/* Left side */}
           <div className="space-y-4 w-1/2">
             <h1 className="font-bebasneue font-semibold text-6xl text-white uppercase">
@@ -30,7 +33,7 @@ const Home = () => {
               headquarters in southeastern Bangladesh. It is famous mostly for
               its long natural sandy beach, and it ...
             </p>
-            <button className="btn btn-warning">
+            <button onClick={handleBooking} className="btn btn-warning">
               Booking <FaArrowRight />
             </button>
           </div>

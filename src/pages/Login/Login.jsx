@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import NavbarBlack from "../Shared/Navbar/NavbarBlack";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
@@ -41,7 +41,9 @@ const Login = () => {
             </label>
           </div>
           <div className="form-control mt-6">
-            <Link className="btn btn-warning">Login</Link>
+            <button type="submit" className="btn btn-warning">
+              Login
+            </button>
           </div>
         </form>
 
