@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import NavbarBlack from "../../Shared/Navbar/NavbarBlack";
 import { AuthContext } from "../../../providers/AuthProvider";
+import { sendEmailVerification } from "firebase/auth";
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
@@ -35,6 +36,10 @@ const Register = () => {
         setSuccess("User created successfully");
         console.log(result.user);
         e.target.reset();
+        // Send Email Verification
+        sendEmailVerification(result.user).than(() => {
+          alert("Please check your email and verify");
+        });
       })
       .catch((error) => {
         console.error(error);
