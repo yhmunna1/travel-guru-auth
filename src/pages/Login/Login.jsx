@@ -1,14 +1,44 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import NavbarBlack from "../Shared/Navbar/NavbarBlack";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    // console.log(form.get("password"));
+    const email = form.get("email");
+    const password = form.get("password");
+    // console.log(email, password);
+
+    signIn(email, password)
+      .then((result) => {
+        setSuccess("Login successful");
+        console.log(result.user);
+        e.target.reset();
+
+        // Navigate after login
+        navigate(location?.state ? location.state : "/");
+        alert("Successfully logged in");
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+        console.error(error);
+      });
+  };
   return (
     <div className="max-w-6xl mx-auto">
       <NavbarBlack></NavbarBlack>
       <div className="h-full border mt-32 py-10 px-28 rounded-lg">
-        <form className="card-body">
+        <form onSubmit={handleLogin} className="card-body">
           <h2 className="font-bold text-2xl">Login</h2>
           <div className="form-control">
             <label className="label">
@@ -16,6 +46,7 @@ const Login = () => {
             </label>
             <input
               type="email"
+              name="email"
               placeholder="email"
               className="input input-bordered"
               required
@@ -27,6 +58,7 @@ const Login = () => {
             </label>
             <input
               type="password"
+              name="password"
               placeholder="password"
               className="input input-bordered"
               required
@@ -40,6 +72,8 @@ const Login = () => {
               </a>
             </label>
           </div>
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+          {success && <p className="text-green-600">{success}</p>}
           <div className="form-control mt-6">
             <button type="submit" className="btn btn-warning">
               Login

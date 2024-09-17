@@ -6,7 +6,7 @@ import { AuthContext } from "../../../providers/AuthProvider";
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
-  const [registerError, setRegisterError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState("");
   const handleRegister = (e) => {
     e.preventDefault();
@@ -18,15 +18,15 @@ const Register = () => {
 
     // Validations checkup and return
     if (password.length < 6) {
-      setRegisterError("Password should be at least 6 characters or Longer");
+      setErrorMessage("Password should be at least 6 characters or Longer");
       return;
     } else if (!/[A-Z]/.test(password)) {
-      setRegisterError("Password should have one Uppercase letter");
+      setErrorMessage("Password should have one Uppercase letter");
       return;
     }
 
     // reset message
-    setRegisterError("");
+    setErrorMessage("");
     setSuccess("");
 
     // Create User:
@@ -94,7 +94,7 @@ const Register = () => {
               required
             />
           </div>
-          {registerError && <p className="text-red-600">{registerError}</p>}
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
           {success && <p className="text-green-600">{success}</p>}
           <div className="form-control mt-6">
             <button type="submit" className="btn btn-warning">
