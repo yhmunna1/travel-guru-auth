@@ -5,7 +5,7 @@ import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, googleLogin } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
@@ -27,13 +27,28 @@ const Login = () => {
 
         // Navigate after login
         navigate(location?.state ? location.state : "/");
-        alert("Successfully logged in");
       })
       .catch((error) => {
         setErrorMessage(error.message);
         console.error(error);
       });
   };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        setSuccess("Login successful");
+        console.log(result.user);
+
+        // Navigate after login
+        navigate(location?.state ? location.state : "/");
+      })
+      .catch((error) => {
+        // setErrorMessage(error.message);
+        // console.error(error);
+      });
+  };
+
   return (
     <div className="max-w-6xl mx-auto">
       <NavbarBlack></NavbarBlack>
@@ -47,7 +62,7 @@ const Login = () => {
             <input
               type="email"
               name="email"
-              placeholder="email"
+              placeholder="jamu@na.com"
               className="input input-bordered"
               required
             />
@@ -59,7 +74,7 @@ const Login = () => {
             <input
               type="password"
               name="password"
-              placeholder="password"
+              placeholder="123456S"
               className="input input-bordered"
               required
             />
@@ -101,7 +116,9 @@ const Login = () => {
         </div>
         <div className="flex justify-center gap-4 border border-gray-300 w-1/3 mx-auto p-4 rounded-full">
           <FaGoogle className="text-xl" />
-          <p className="font-medium text-base">Continue with Google</p>
+          <button onClick={handleGoogleLogin} className="font-medium text-base">
+            Continue with Google
+          </button>
         </div>
       </div>
     </div>
